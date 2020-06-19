@@ -1,0 +1,49 @@
+---
+title: "monte carlo"
+author: "Alexa Kelly"
+date: "6/19/2020"
+output: html_document
+---
+
+
+Harvard Data Science: Probability Course 
+ "Monte Carlo simulations"
+ 
+Create an urn with 2 red and 3 blue beads
+```{r setup, include=FALSE}
+#use rep function to generate the urn, 
+beads <- rep(c("red", "blue"), times = c(2,3))    
+
+beads    # view beads object
+sample(beads, 1)    # sample 1 bead at random
+
+B <- 10000    # number of times to draw 1 bead
+events <- replicate(B, sample(beads, 1))    # draw 1 bead, B times
+tab <- table(events)    # make a table of outcome counts
+tab    # view count table
+prop.table(tab)    # view table of outcome proportions
+```
+
+A more accurate use of stats for replacing the beads would be:
+```{r }
+events2 <- sample(beads, B, replace= TRUE)
+prop.table(table(events2))
+
+#  the vector beads from ^:
+beads <- rep(c("red", "blue"), times = c(2,3))
+beads
+
+```
+
+To find the probability of drawing a blue bead at random, take the mean:
+```{r }
+mean(beads == "blue")
+```
+Clearly there is a .6 chance of picking a blue bead as the first.
+
+Finding the outcomes of the other 4 is as follows:
+```{r }
+x <- sample(beads, 5)
+x[2:5]                
+```
+These events are not independent! each pick affects the probability of the next color.
