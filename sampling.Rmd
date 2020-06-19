@@ -1,0 +1,55 @@
+---
+title: "probability"
+author: "Alexa Kelly"
+date: "6/19/2020"
+output: html_document
+---
+
+
+Harvard Data Sceince: Probability
+
+One ball will be drawn at random from a box containing: 3 cyan balls, 5 magenta balls, and 7 yellow balls.
+
+Possibility of Cyan
+```{r }
+cyan <- 3
+magenta <- 5
+yellow<-7
+
+#probability of the ball being cyan: (with replacement)
+p_1 = cyan/(cyan + magenta + yellow)
+p_1
+```
+
+Probability of the ball being not cyan: (with replacement)
+```{r }
+p_2 = (magenta + yellow)/(cyan + magenta + yellow)
+p_2
+
+```
+
+Probability (without replacement): first draw is cyan and that the second draw is not cyan?
+A : the first draw is cyan
+B : the second draw is not cyan
+
+Using math equations, we have that P(A) = 3/15 = 1/5 
+
+```{r }
+#probability of not choosing a cyan ball on the second draw without replacement.
+p_3 <- 1 - (cyan - 1) / (cyan + magenta + yellow - 1) # P(B/A) = 12/14 = 6 / 7 so ... 
+#P(A and B ) = P(A) * P(B/A) = 1/5 * 6/7 = 6/35
+
+#so the probability that the first draw is cyan and the second draw is not cyan:
+p_1 * p_3
+
+```
+
+Sampling with replacement.
+now, after taking the first draw and recording the color, return it back to the box and shake the box. 
+```{r }
+#probability the first draw is cyan and that the second draw is not cyan:
+#P(A) = 1/5       # we called this p_1
+p_4 <- 1- cyan/ (cyan + magenta + yellow)     # P(C) = 1- 1/5 = 4/5
+p_1 * p_4    # P(A and C) = P(A) * P(B) = 1/5 * 4/5 = 4/25
+```
+
