@@ -1,0 +1,61 @@
+---
+title: "lab11_practice"
+author: "Alexa Kelly"
+date: "4/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r }
+
+library(tidyverse)    # data manipulation and visualization
+library(kernlab)      # SVM methodology
+library(e1071)        # SVM methodology
+library(ISLR)         # contains example data set "Khan"
+library(RColorBrewer) # customized coloring of plots
+
+```
+
+```{r }
+set.seed(123)
+
+# Construct sample data set - completely separated
+x <- matrix(rnorm(20*2), ncol = 2)
+y <- c(rep(-1,10), rep(1,10))
+
+x[y==1,] <- x[y==1,] + 2.5
+
+dat <- data.frame(x=x, y=as.factor(y))
+
+```
+
+```{r }
+ggplot(data = dat, aes(x = x.2, y = x.1, color = y, shape = y)) + 
+  geom_point(size = 2) +
+  scale_color_manual(values=c("#000000", "#FF0000")) +
+  theme(legend.position = "none")
+
+```
+
+```{r }
+# Fit Support Vector Machine model to data set
+svmfit1 <- svm(y~., data = dat, kernel = "linear", scale = FALSE)
+
+# Plot Results
+plot(svmfit1, dat)
+
+```
+
+```{r }
+# fit model and produce plot
+kernfit1 <- ksvm(x, y, type = "C-svc", 
+                kernel = 'vanilladot')
+
+# Plot Results
+plot(kernfit1, data = x)
+
+```
+

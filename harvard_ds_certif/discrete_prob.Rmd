@@ -1,0 +1,68 @@
+---
+title: "discrete"
+author: "Alexa Kelly"
+date: "6/24/2020"
+output: html_document
+---
+
+Harvard Data Sceince: Probability
+
+
+Possibility of Cyan
+
+One ball will be drawn at random from a box containing: 3 cyan balls, 5 magenta balls, and 7 yellow balls.
+```{r setup }
+cyan <- 3
+magenta <- 5
+yellow<-7
+```
+
+
+Probability of the ball being cyan (p_1) verses the probability of the ball being not cyan (p_2), WITH replacement.
+```{r }
+p_1 = cyan / (cyan + magenta + yellow)
+p_1
+
+p_2 = (magenta + yellow) / (cyan + magenta + yellow)
+p_2
+```
+
+
+Probability, without replacement: first draw is cyan and that the second draw is not cyan?
+A : the first draw is cyan
+B : the second draw is not cyan
+
+Using using math equations, using the dependent probability equation, we have that:
+P(A) = 3/15 = 1/5 
+
+To find the probability of not choosing a cyan ball on the second draw without replacement, we need P(A⋂B) =  P(A) * P(B/A) = 1/5 * 6/7 = 6/35
+
+where P(B/A) = 12/14 = 6 / 7 so ... 
+P(A) is p_1, the first probability we calculated. We can define p_3 as P(B/A).
+
+
+```{r }
+#probability of not choosing a cyan ball on the second draw without replacement.
+p_3 <- 1 - (cyan - 1) / (cyan + magenta + yellow - 1) 
+
+#so the probability that the first draw is cyan and the second draw is not cyan:
+p_1 * p_3
+```
+
+
+Now let's sample with replacement. After taking the first draw and recording the color, return it back to the box and shake the box. 
+
+The Multiplication Rule for independent events:
+P(A⋂B⋂C)= P(A and B and C) = P(A) * P(B) * P(C)
+
+The probability the first draw is cyan and that the second draw is not cyan is P(A) = 1/5. As mentioned earlier, we called this p_1.
+
+Now we define P(C), named p_4 here. 
+P(C) = 1- 1/5 = 4/5.
+
+So, to sample with replacement, we have:  P(A and C) = P(A) * P(C) = 1/5 * 4/5 = 4/25
+
+```{r }
+p_4 <- 1- cyan/ (cyan + magenta + yellow) 
+p_1 * p_4 
+```

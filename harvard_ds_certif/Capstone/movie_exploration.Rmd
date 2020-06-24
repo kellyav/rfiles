@@ -1,0 +1,128 @@
+---
+title: "harvard_cap"
+author: "Alexa Kelly"
+date: "6/15/2020"
+output: html_document
+---
+
+```{r environment}
+################################
+# Create edx set, validation set
+################################
+
+# clear environment:
+# gc()
+
+print('this set up process could take a couple of minutes...')
+
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(caret)) install.packages("caret", repos = "http://cran.us.r-project.org")
+if(!require(data.table)) install.packages("data.table", repos = "http://cran.us.r-project.org")
+
+if(!require(tidyverse)) install.packages("dplyr")
+
+library(dplyr)
+library(tidyverse)
+library(caret)
+library(data.table)
+
+# MovieLens 10M dataset:
+ # https://grouplens.org/datasets/movielens/10m/
+ # http://files.grouplens.org/datasets/movielens/ml-10m.zip
+
+```
+
+```{r data cleaning}
+dl <- tempfile()
+ download.file("http://files.grouplens.org/datasets/movielens/ml-10m.zip", dl)
+
+ratings <- fread(text = gsub("::", "\t", readLines(unzip(dl, "ml-10M100K/ratings.dat"))),
+                 col.names = c("userId", "movieId", "rating", "timestamp"))
+
+movies <- str_split_fixed(readLines(unzip(dl, "ml-10M100K/movies.dat")), "\\::", 3)
+ colnames(movies) <- c("movieId", "title", "genres")
+ movies <- as.data.frame(movies) %>% mutate(movieId = as.numeric(levels(movieId))[movieId],
+                                            title = as.character(title),
+                                            genres = as.character(genres))
+
+movielens <- left_join(ratings, movies, by = "movieId")
+```
+
+```{r validation set}
+# Validation set will be 10% of MovieLens data
+set.seed(1, sample.kind="Rounding")
+# if using R 3.5 or earlier, use `set.seed(1)` instead
+test_index <- createDataPartition(y = movielens$rating, times = 1, p = 0.1, list = FALSE)
+ edx <- movielens[-test_index,]
+ temp <- movielens[test_index,]
+
+# Make sure userId and movieId in validation set are also in edx set
+validation <- temp %>% 
+      semi_join(edx, by = "movieId") %>%
+      semi_join(edx, by = "userId")
+
+# Add rows removed from validation set back into edx set
+removed <- anti_join(temp, validation)
+ edx <- rbind(edx, removed)
+
+rm(dl, ratings, movies, test_index, temp, movielens, removed)
+```
+
+
+```{r number of x.x rated movies}
+dim(edx)
+
+#Number of zero rated movies
+sum(edx$rating ==0)
+
+#Number of 3.0 rated movies
+sum(edx$rating ==3.0)
+```
+
+```{r  number of movies and users}
+# number of different movies are in the edx dataset
+edx %>% summarize(n_movies = n_distinct(movieId))
+
+# number of different users are in the edx dataset
+edx %>% summarize(n_users = n_distinct(userId))
+```
+
+
+```{r genre ratings}
+# number of movie ratings are in each of the following genres in the edx dataset
+n_drama <- edx %>% filter(str_detect(genres,"Drama"))
+n_com <- edx %>% filter(str_detect(genres,"Comedy"))
+n_thrill <- edx %>% filter(str_detect(genres,"Thriller"))
+n_rom <- edx %>% filter(str_detect(genres,"Romance"))
+
+cat('The Drama genre has',nrow(n_drama),'movies','\n')
+cat('The Comedy genre has',nrow(n_com),'movies','\n')
+cat('The Thriller genre has',nrow(n_thrill),'movies','\n')
+cat('The Romance genre has',nrow(n_rom),'movies','\n')
+```
+
+
+```{r most rated movie(s)}
+# movie that has the greatest number of ratings:
+most_rat <- edx %>% group_by(title) %>% 
+   summarise(title_ratings = n()) %>% arrange(desc(title_ratings))
+most_rat[1,]
+
+#five most given ratings in order from most to least
+top_rat <- edx %>% group_by(rating) %>%
+   summarise(n_ratings = n()) %>% arrange(desc(n_ratings))
+top_rat[1:5,]
+```
+
+
+```{r half stars occurance}
+# In general, are half star ratings are less common than whole star ratings (e.g., there are fewer ratings of 3.5 than there are ratings of 3 or 4, etc.).
+
+# half stars vs full stars
+top_rat      # look at the ordered list of ratings in order of number given
+
+fullstar = top_rat[1,2] + top_rat[2,2] + top_rat[3,2] + top_rat[5,2] + top_rat[7,2]
+halfstar = top_rat[4,2] + top_rat[6,2] + top_rat[8,2] + top_rat[9,2] + top_rat[10,2]
+
+fullstar > halfstar
+```
