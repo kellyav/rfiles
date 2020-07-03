@@ -13,3 +13,6 @@ These courses used RStudio to create projects in RMarkdown
 - Introduction to Machine Learning 
 - Probability and Statistics 
 
+## DataCamp
+- Communicating with the tidyverse. See the folder iso_workerscomp_viz
+
