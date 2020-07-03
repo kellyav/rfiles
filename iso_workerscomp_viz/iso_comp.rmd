@@ -1,5 +1,5 @@
 ---
-title: "tidyv"
+title: "Communicating with the Tidyverse with ISO data"
 author: "Alexa Kelly"
 date: "7/2/2020"
 output:
@@ -11,12 +11,13 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+In this RMarkdown, we will explore:
 1. The relationship between weekly working hours and monetary compensation in European countries, according to the International Labour Organization (ILO). 
 
-2. Communicating with the tidyverse
-They say that a picture is worth a thousand words. Indeed, successfully promoting your data analysis is not only a matter of accurate and effective graphics, but also of aesthetics and uniqueness. 
+2. Communicating with the tidyverse. They say that a picture is worth a thousand words. Successfully promoting your data analysis is not only a matter of accurate and effective graphics, but also of aesthetics and uniqueness. 
 
-This Rmarkdown shows how to leverage the power of ggplot2 themes for producing publication-quality graphics that stick out from the mass of boilerplate plots out there. It shows you how to tweak and get the most out of ggplot2 in order to produce unconventional plots that draw attention on social media. 
+
+More specifically, it will show how to leverage the power of ggplot2 themes for producing publication-quality graphics that stick out from the mass of boilerplate plots out there. And, how to tweak and get the most out of ggplot2 in order to produce unconventional plots that draw attention on social media. 
 
 In the end, combining this knowledge will produce a slick and custom-styled report with RMarkdown and CSS – all of that within the powerful tidyverse.
 
@@ -213,7 +214,7 @@ ggplot(ilo_data) +
   geom_text(
           aes(x = working_hours,
               y = country,
-              label = round(working_hours, 1)))
+              label = round(working_hours, 1))) 
 ```
 
 ```{r }
@@ -260,7 +261,7 @@ ilo_dot_plot <- ilo_dot_plot +
   # Apply your theme
   theme_ilo() +
   # Change the viewport
-  coord_cartesian(xlim = c(25, 41))
+  coord_cartesian(xlim = c(25, 41)) 
   
 # View the plot
 ilo_dot_plot
@@ -296,6 +297,6 @@ ilo_dot_plot +
     axis.text = element_blank(),
     panel.grid = element_blank(),
     # Also, let's reduce the font size of the subtitle
-    plot.subtitle = element_text(size = 7)
+    plot.subtitle = element_text(size = 7) 
   ) 
 ```
