@@ -5,6 +5,7 @@ Files posted here will have a concentration in data analytics and machine learni
 These courses used RStudio to create projects in RMarkdown
 
 ### Harvard 
+See the folder harvard_ds_certif
 
 - Data Science: Probability 
 - Data Science: Capstone 
