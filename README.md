@@ -14,6 +14,6 @@ See the folder harvard_ds_certif
 - Introduction to Machine Learning 
 - Probability and Statistics 
 
-## DataCamp
+### DataCamp
 - Communicating with the tidyverse. See the folder iso_workerscomp_viz
 
