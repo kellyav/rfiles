@@ -1,8 +1,8 @@
-Harvard Data Science Certification
+# Harvard Data Science Certification
 
 https://www.edx.org/professional-certificate/harvardx-data-science 
 
-Courses In Progress:
+## Courses In Progress:
 
 1. R Basics
 
