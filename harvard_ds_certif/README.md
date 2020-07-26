@@ -14,4 +14,4 @@ See folder *probability_3*
 
 9. Capstone
 
-See folder capstone_9
+See folder *capstone_9*
